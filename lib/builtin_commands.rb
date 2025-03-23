@@ -53,6 +53,8 @@ module BuiltinCommands
           return
         end
         path = oldpwd
+      elsif path == "~"
+        path = ENV["HOME"]
       end
 
       ENV["OLDPWD"] = Dir.pwd
