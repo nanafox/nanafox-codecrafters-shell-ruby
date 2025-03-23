@@ -15,6 +15,8 @@ module Utils
         BuiltinCommands.echo(args.join(" "))
       when "type"
         BuiltinCommands.type(*args)
+      when "pwd"
+        BuiltinCommands.pwd
       end
     end
 

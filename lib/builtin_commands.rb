@@ -1,5 +1,5 @@
 module BuiltinCommands
-  CMD_LIST = %w[exit echo type]
+  CMD_LIST = %w[exit echo type pwd]
 
   class << self
     # Exits the shell program with the provided `status_code` or whatever the last
@@ -36,6 +36,12 @@ module BuiltinCommands
           Utils.handle_command_not_found(command, error: "not found")
         end
       end
+    end
+
+    # Prints the current working directory
+    def pwd
+      $stdout.write("#{Dir.pwd}\n")
+      $last_exit_code = ShellStatus::SUCCESS
     end
   end
 end
