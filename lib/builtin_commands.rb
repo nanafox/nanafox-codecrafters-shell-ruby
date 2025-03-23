@@ -22,14 +22,18 @@ module BuiltinCommands
     def type(*commands)
       if commands.empty?
         $last_exit_code = ShellStatus::SUCCESS
-      else
-        commands.each do |command|
-          if Utils.builtin_command? command
-            $stdout.write("#{command} is a shell builtin\n")
-            $last_exit_code = ShellStatus::SUCCESS
-          else
-            Utils.handle_command_not_found(command, error: "not found")
-          end
+        return
+      end
+
+      commands.each do |command|
+        if Utils.builtin_command? command
+          $stdout.write("#{command} is a shell builtin\n")
+          $last_exit_code = ShellStatus::SUCCESS
+        elsif Utils.path_command? command
+          $stdout.write("#{command} is #{Utils.find_command_path(command)}\n")
+          $last_exit_code = ShellStatus::SUCCESS
+        else
+          Utils.handle_command_not_found(command, error: "not found")
         end
       end
     end

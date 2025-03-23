@@ -1,3 +1,5 @@
+require "pathname"
+
 module Utils
   class << self
     # Handles builtin commands.
@@ -29,6 +31,28 @@ module Utils
     def handle_command_not_found(command, error: nil)
       $stderr.write("#{command}: #{error || "command not found"}\n")
       $last_exit_code = ShellStatus::COMMAND_NOT_FOUND
+    end
+
+    def system_path
+      @path ||= ENV["PATH"].split(":")
+    end
+
+    def find_command_path(command)
+      system_path.each do |path|
+        command_path = Pathname.new("#{path}/#{command}")
+        return command_path.to_s if command_path.exist? && command_path.executable?
+      end
+
+      nil
+    end
+
+    # Determines whether a command is available in the user's PATH environment.
+    #
+    # @param command [String] The command to check.
+    #
+    # @return [Boolean] `true` if it's a PATH command, `false` otherwise.
+    def path_command?(command)
+      !find_command_path(command).nil?
     end
   end
 end
