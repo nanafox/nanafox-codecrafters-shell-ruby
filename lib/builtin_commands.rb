@@ -1,5 +1,5 @@
 module BuiltinCommands
-  CMD_LIST = %w[exit echo type pwd]
+  CMD_LIST = %w[exit echo type pwd cd]
 
   class << self
     # Exits the shell program with the provided `status_code` or whatever the last
@@ -42,6 +42,23 @@ module BuiltinCommands
     def pwd
       $stdout.write("#{Dir.pwd}\n")
       $last_exit_code = ShellStatus::SUCCESS
+    end
+
+    # Changes directory to wherever the path points to, provided it's valid
+    def chdir(path)
+      if path == "-"
+        oldpwd = ENV["OLDPWD"]
+        if oldpwd.nil? || oldpwd.empty?
+          $stderr.write("cd: OLDPWD not set\n")
+          return
+        end
+        path = oldpwd
+      end
+
+      ENV["OLDPWD"] = Dir.pwd
+      Dir.chdir(path)
+    rescue Errno::ENOENT
+      $stderr.write("cd: #{path}: No such file or directory\n")
     end
   end
 end

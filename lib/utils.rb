@@ -17,6 +17,8 @@ module Utils
         BuiltinCommands.type(*args)
       when "pwd"
         BuiltinCommands.pwd
+      when "cd"
+        BuiltinCommands.chdir(args[0])
       end
     end
 
