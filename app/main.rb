@@ -1,5 +1,7 @@
-# Uncomment this block to pass the first stage
-# $stdout.write("$ ")
+while true
+  $stdout.write("$ ")
 
-# Wait for user input
-command, *args = gets.chomp.split(" ")
+  # Wait for user input
+  _, *_ = gets.chomp.split(" ")
+end
+
