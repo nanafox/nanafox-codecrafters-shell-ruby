@@ -3,6 +3,6 @@ while true
 
   # Wait for user input
   command, *_ = gets.chomp.split(" ")
-  $stderr.write("invalid_command: #{command} not found\n") unless command.nil?
+  $stderr.write("#{command}: command not found\n") unless command.nil?
 end
 
