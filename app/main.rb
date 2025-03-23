@@ -7,14 +7,18 @@ require_relative "../lib/utils"
 $last_exit_code = ShellStatus::SUCCESS  # tracks the status code of execute commands
 
 def main
-  while true
-    $stdout.write("$ ")
+  loop do
+    if $stdin.tty?
+      $stdout.write("$ ")
+    end
 
     # Wait for user input
     begin
       command, *args = gets.chomp.split(" ")
     rescue NoMethodError, Interrupt
-      $stdout.write("exit\n")
+      if $stdin.tty?
+        $stdout.write("exit\n")
+      end
       Utils.handle_builtin_command("exit", $last_exit_code)
     end
 
