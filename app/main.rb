@@ -6,16 +6,25 @@ require_relative "../lib/utils"
 
 $last_exit_code = ShellStatus::SUCCESS  # tracks the status code of execute commands
 
+def show_prompt
+  if $stdin.tty?
+    $stdout.write("$ ")
+  end
+end
+
 def main
   loop do
-    if $stdin.tty?
-      $stdout.write("$ ")
+    show_prompt
+
+    trap ("SIGINT") do
+      $stdout.write("\n")
+      show_prompt
     end
 
     # Wait for user input
     begin
       command, *args = gets.chomp.split(" ")
-    rescue NoMethodError, Interrupt
+    rescue NoMethodError
       if $stdin.tty?
         $stdout.write("exit\n")
       end
