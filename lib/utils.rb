@@ -23,5 +23,10 @@ module Utils
     def builtin_command?(command)
       BuiltinCommands::CMD_LIST.include? command
     end
+
+    def handle_command_not_found(command)
+      $stderr.write("#{command}: command not found\n")
+      $last_exit_code = ShellStatus::COMMAND_NOT_FOUND
+    end
   end
 end
