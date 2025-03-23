@@ -54,5 +54,14 @@ module Utils
     def path_command?(command)
       !find_command_path(command).nil?
     end
+
+    # Handle commands found in the user's PATH.
+    #
+    # @param command [String] The command to execute.
+    # @param args [Array] An array of command arguments.
+    def handle_path_command(command, *args)
+      system("#{command}", *args)
+      $last_exit_code = $?.exitstatus
+    end
   end
 end

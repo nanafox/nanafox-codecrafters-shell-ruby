@@ -18,10 +18,14 @@ def main
       Utils.handle_builtin_command("exit", $last_exit_code)
     end
 
+    next if command.nil?
+
     if Utils.builtin_command? command
       Utils.handle_builtin_command(command, *args)
+    elsif Utils.path_command? command
+      Utils.handle_path_command(command, *args)
     else
-      Utils.handle_command_not_found(command) unless command.nil?
+      Utils.handle_command_not_found(command)
     end
   end
 end
