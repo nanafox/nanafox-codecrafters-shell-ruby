@@ -11,13 +11,17 @@ def main
     $stdout.write("$ ")
 
     # Wait for user input
-    command, *args = gets.chomp.split(" ")
+    begin
+      command, *args = gets.chomp.split(" ")
+    rescue NoMethodError, Interrupt
+      $stdout.write("exit\n")
+      Utils.handle_builtin_command("exit", $last_exit_code)
+    end
 
     if Utils.builtin_command? command
       Utils.handle_builtin_command(command, *args)
     else
-      $stderr.write("#{command}: command not found\n") unless command.nil?
-      $last_exit_code = ShellStatus::COMMAND_NOT_FOUND
+      Utils.handle_command_not_found(command) unless command.nil?
     end
   end
 end
