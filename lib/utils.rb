@@ -9,6 +9,8 @@ module Utils
       when "exit"
         status = args[0]&.to_i || $last_exit_code
         BuiltinCommands.exit_shell(status)
+      when "echo"
+        BuiltinCommands.echo(args.join(" "))
       end
     end
 
