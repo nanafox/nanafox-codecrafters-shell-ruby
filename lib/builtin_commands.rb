@@ -28,7 +28,7 @@ module BuiltinCommands
             $stdout.write("#{command} is a shell builtin\n")
             $last_exit_code = ShellStatus::SUCCESS
           else
-            Utils.handle_command_not_found(command)
+            Utils.handle_command_not_found(command, error: "not found")
           end
         end
       end
