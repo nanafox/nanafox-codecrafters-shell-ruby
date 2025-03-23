@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ShellStatus
   COMMAND_NOT_FOUND = 127
   SUCCESS = 0

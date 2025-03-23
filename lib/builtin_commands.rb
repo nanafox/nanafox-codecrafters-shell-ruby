@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module BuiltinCommands
   CMD_LIST = %w[exit echo type pwd cd]
 
