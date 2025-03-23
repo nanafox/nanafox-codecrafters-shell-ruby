@@ -67,5 +67,21 @@ module Utils
       system("#{command} #{args.join(" ")}")
       $last_exit_code = $?.exitstatus
     end
+
+    def handle_command(command, *args)
+      if builtin_command? command
+        handle_builtin_command(command, *args)
+      elsif path_command? command
+        handle_path_command(command, *args)
+      else
+        handle_command_not_found(command)
+      end
+    end
+
+    def show_prompt
+      if $stdin.tty?
+        $stdout.write("$ ")
+      end
+    end
   end
 end
