@@ -18,7 +18,7 @@ def main
       command, *args = gets.chomp.split(" ")
     rescue NoMethodError
       $stdout.write("exit\n") if $stdin.tty?
-      Utils.handle_builtin_command("exit", $last_exit_code)
+      BuiltinCommands.exit_shell($last_exit_code)
     end
 
     next if command.nil?
